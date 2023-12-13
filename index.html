@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Life Path Number Calculator</title>
+
+    <style>
+      body {
+        font-family: "Georgia", serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #fdeff4; /* Soft pink background */
+        color: #444; /* Darker text for readability */
+        margin: 0;
+      }
+
+      .container {
+        text-align: center;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+      }
+
+      h1 {
+        color: #d17b88; /* Soft rose color */
+        margin-bottom: 20px;
+        font-size: 2em;
+      }
+
+      input[type="date"] {
+        margin-top: 10px;
+        padding: 10px;
+        border: 2px solid #d17b88; /* Border color */
+        border-radius: 8px;
+        font-size: 1em;
+        color: #444;
+        background-color: #fdeff4;
+        transition: border-color 0.3s;
+      }
+
+      input[type="date"]:focus {
+        border-color: #b05674; /* Darker shade for focus */
+        outline: none;
+      }
+
+      button {
+        margin-top: 20px;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 8px;
+        background-color: #d17b88;
+        color: white;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #b05674;
+      }
+
+      #result {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #fdeff4;
+        border-radius: 8px;
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+        opacity: 0;
+        transform: translateY(20px);
+        visibility: hidden;
+      }
+
+      #result.show {
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      .background-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: linear-gradient(60deg, #fdaff4, #a17b88, #fdefa4, #d17b68);
+        background-size: 300% 300%;
+        animation: moveBackground 60s ease infinite;
+      }
+
+      @keyframes moveBackground {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .instagram-link {
+        display: inline-block;
+        margin-top: 20px;
+        font-size: 1em;
+        color: #d17b88; /* Soft rose color */
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+      }
+
+      .instagram-link:hover {
+        color: #fff;
+        background-color: #d17b88;
+        text-decoration: none;
+      }
+      /* Add any additional styling as necessary */
+    </style>
+    <script>
+      function calculateLifePathNumber() {
+        var dob = document.getElementById("dobInput").value;
+        var sum = 0;
+
+        // Convert date to a string in the format YYYYMMDD
+        var dateString = dob.replace(/-/g, "");
+
+        // Iterate over each character in the dateString
+        for (var i = 0; i < dateString.length; i++) {
+          sum += parseInt(dateString[i]);
+        }
+
+        // Reduce to a single digit
+        while (sum > 9) {
+          sum = sum
+            .toString()
+            .split("")
+            .reduce((a, b) => parseInt(a) + parseInt(b), 0);
+        }
+
+        var explanation = getLifePathNumberExplanation(sum);
+
+        document.getElementById(
+          "result"
+        ).innerHTML = `Твій номер життєвого шляху: <strong>${sum}</strong><p>${explanation}</p>`;
+        document.getElementById("result").classList.add("show"); // Add this line
+      }
+
+      function getLifePathNumberExplanation(number) {
+        var explanations = {
+          1: "Номер 1 - Лідер: Амбітні, незалежні та цілеспрямовані люди з числом життєвого шляху 1 є природженими лідерами. Вони мають сильне бажання бути першими і найкращими у всіх своїх починаннях",
+          2: "Номер 2 - Посередник: Дипломатичні, схильні до співпраці та миротворчості, люди з номером життєвого шляху 2 - ідеальні командні гравці, відомі своїм умінням слухати, вести переговори та надавати підтримку",
+          3: "Номер 3 - Комунікатор: Творчі, експресивні та соціальні, люди з числом життєвого шляху 3 відомі своєю харизматичною особистістю, оптимізмом та здатністю надихати інших",
+          4: "Число 4 - Будівельник: Організовані, практичні та надійні, люди з числом життєвого шляху 4 є будівничими фундаменту суспільства, відомі своїм сильним почуттям обов'язку та відданістю справі",
+          5: "Номер 5 - Авантюрист: Допитливі, схильні до пригод і волелюбні, люди з числом життєвого шляху 5 - енергійні натури, які постійно шукають змін і різноманітності в житті",
+          6: "Число 6 - Годувальник: Відповідальні, турботливі та гармонійні, люди з числом життєвого шляху 6 - це опікуни, які відомі своєю турботливою натурою та відданістю іншим",
+          7: "Номер 7 - Шукач: Аналітичні, інтроспективні та філософські, люди з числом життєвого шляху 7 перебувають у постійному пошуку знань, істини та розуміння",
+          8: "Число 8 - Сила: Амбітні, ділові та цілеспрямовані, люди з числом життєвого шляху 8 часто бувають успішними та досвідченими в бізнесі та фінансових питаннях",
+          9: "Номер 9 - Гуманіст: Співчутливі, безкорисливі та ідеалістичні, люди з числом життєвого шляху 9 відомі своїм співчуттям і глибоко гуманною натурою, їх часто тягне допомагати іншим.", // Add more numbers and their explanations as needed
+        };
+
+        return explanations[number] || "Невірний номер.";
+      }
+    </script>
+  </head>
+  <body>
+    <div class="background-animation"></div>
+    <div class="container">
+      <h1>Калькулятор числа життєвого шляху</h1>
+      <form onsubmit="calculateLifePathNumber(); return false;">
+        <input type="date" id="dobInput" />
+        <button type="submit">Розрахувати</button>
+      </form>
+      <div id="result"></div>
+      <a
+        href="https://www.instagram.com/janepopcorn/"
+        target="_blank"
+        class="instagram-link"
+        >@janepopcorn</a
+      >
+    </div>
+  </body>
+</html>
